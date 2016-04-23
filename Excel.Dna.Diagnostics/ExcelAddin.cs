@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using ExcelDna.Integration;
 using ExcelDna.Integration.CustomUI;
 using System.Runtime.InteropServices;
+using System.IO;
+using System.Reflection;
 
 namespace Excel.Dna.Diagnostics
 {
@@ -13,8 +15,14 @@ namespace Excel.Dna.Diagnostics
     public class ExcelAddin : ExcelRibbon, IExcelAddIn
     {
         private IRibbonUI ribbon = null;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ExcelAddin() {
+            //var config = Path.Combine(GetConfigurationPath(), "Excel.Dna.Diagnostics-AddIn.xll.config");
+            var config = string.Format("{0}{1}",GetConfigurationPath(), ".config");
+            log4net.Config.XmlConfigurator.Configure(new FileInfo(config));
+            log.Error("This is Ctor");
+
             Console.WriteLine("Hello");
         
         }
@@ -37,10 +45,22 @@ namespace Excel.Dna.Diagnostics
 
         public void AutoOpen()
         {
+            log.Error("This is Auto Open");
             Console.WriteLine("Hello");
              
         }
 
+
+        private string GetConfigurationPath()
+        {
+            
+            string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            UriBuilder uri = new UriBuilder(codeBase);
+            return Uri.UnescapeDataString(uri.Path);
+            //string path = Uri.UnescapeDataString(uri.Path);
+            //return Path.GetDirectoryName(path);
+        
+        }
         /*
          * "C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics\bin\Debug\Excel.Dna.Diagnostics-AddIn.xll"
          * 
