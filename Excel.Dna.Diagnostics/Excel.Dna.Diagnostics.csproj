@@ -40,11 +40,6 @@
     <Reference Include="AddinX.Ribbon.Implementation">
       <HintPath>..\packages\AddinX.Ribbon.Implementation.1.0.0\lib\net451\AddinX.Ribbon.Implementation.dll</HintPath>
     </Reference>
-    <Reference Include="ExcelDna.Integration, Version=0.33.5730.40390, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\ExcelDna.Integration.0.33.9\lib\ExcelDna.Integration.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="log4net, Version=1.2.11.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Binaries\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
@@ -72,19 +67,23 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="ExcelCustomConfigs.xml" />
-    <Content Include="XMLFile1.xml" />
+    <Content Include="Excel2010CustomUI.xml" />
+    <Content Include="Excel2016CustomConfigs.xml" />
+    <Content Include="Excel2007ConfigUI.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExcelDna.Integration\ExcelDna.Integration.csproj">
+      <Project>{196735bc-5a5c-4a21-9fe4-ec01cb7f3de9}</Project>
+      <Name>ExcelDna.Integration</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)Binaries\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
-"$(SolutionDir)Binaries\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
-
-xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
+    <PostBuildEvent>xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
 xcopy "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna*" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna*" /C /Y
 xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna64.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.xll*" /C /Y
 "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y

@@ -81,6 +81,8 @@ namespace Excel.Dna.Diagnostics
 
 
 /*
+ * https://groups.google.com/forum/#!searchin/exceldna/Get$20Ribbon$20to$20show/exceldna/FzkZz9giA4M/mTNkqLSPP1MJ
+ * 
  * "C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics\bin\Debug\Excel.Dna.Diagnostics-AddIn.xll"
  * 
  * C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE
