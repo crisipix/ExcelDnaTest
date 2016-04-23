@@ -36,7 +36,7 @@ namespace ExcelDna.Integration.CustomUI
 
             Dictionary<string, string> customUIs = new Dictionary<string, string>();
 
-            if (this.DnaLibrary.CustomUIs.Count > 0)
+            if (this.DnaLibrary.CustomUIs.Count == 0)
             {
                 //Logger.DnaCompilation.Error("The Ribbon/COM add-in Contains no custom UI elements", DnaLibrary.CurrentLibrary.Name);
                 Logger.DnaCompilation.Warn("The Ribbon/COM add-in Contains no custom UI elements", DnaLibrary.CurrentLibrary.Name);
