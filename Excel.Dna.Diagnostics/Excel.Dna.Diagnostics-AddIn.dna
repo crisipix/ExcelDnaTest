@@ -1,0 +1,15 @@
+<DnaLibrary Name="Excel.Dna.Diagnostics Add-In" RuntimeVersion="v4.0">
+  <ExternalLibrary Path="Excel.Dna.Diagnostics.dll" Pack="true" />
+  <customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui" loadImage='LoadImage' onLoad='OnLoad'>
+      <ribbon startFromScratch="false">
+      <tabs>
+        <tab id="CustomTab" label="Test Tab">
+          <group id="TestGroup" label="Test Diagnostics">
+            <button id='Button1' label='Run Test' imageMso='M' size='normal' onAction='RunTest' tag='RunTest'/>
+            <button id="customButton1" label="JG Button 1" imageMso="HappyFace" size="large" onAction="Callback1" />
+          </group>
+        </tab>
+      </tabs>
+    </ribbon>
+  </customUI>
+</DnaLibrary>
