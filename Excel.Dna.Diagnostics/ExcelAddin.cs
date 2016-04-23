@@ -8,6 +8,10 @@ using ExcelDna.Integration.CustomUI;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Reflection;
+using AddinX.Ribbon.ExcelDna;
+using AddinX.Ribbon.Contract;
+using AddinX.Ribbon.Contract.Command;
+using Microsoft.Office.Interop.Excel;
 
 namespace Excel.Dna.Diagnostics
 {
@@ -32,7 +36,6 @@ namespace Excel.Dna.Diagnostics
             this.ribbon = ribbon;
         }
 
-
         public void RunTest(IRibbonControl control)
         {
             Console.WriteLine("Hello");
@@ -45,11 +48,11 @@ namespace Excel.Dna.Diagnostics
 
         public void AutoOpen()
         {
+            // The Excel Application object
+            AddinContext.ExcelApp = new Application(null, ExcelDnaUtil.Application);
             log.Error("This is Auto Open");
             Console.WriteLine("Hello");
-             
         }
-
 
         private string GetConfigurationPath()
         {
@@ -61,25 +64,43 @@ namespace Excel.Dna.Diagnostics
             //return Path.GetDirectoryName(path);
         
         }
-        /*
-         * "C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics\bin\Debug\Excel.Dna.Diagnostics-AddIn.xll"
-         * 
-         * C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE
-         * 
-         xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
-        xcopy "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna*" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna*" /C /Y
-        xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna64.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.xll*" /C /Y
-        "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
-        "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna" /Y
-         
-         * 
-         * https://groups.google.com/forum/#!topic/exceldna/IhqXaK-avWg
-         * 
-         * xcopy "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
-            "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
 
-         * 
-         * https://msdn.microsoft.com/en-us/library/aa730920%28v=office.12%29.aspx
-         */
+        /// <summary>
+        /// Test Function
+        /// Go to excel type in =CoolFunction("Name")
+        /// </summary>
+        [ExcelFunction(Description = "Cool Name Function")]
+        public static string CoolFunction(string name)
+        {
+            return string.Format("Hello {0} You are Cool", name);
+        }
+    
     }
 }
+
+
+
+/*
+ * "C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics\bin\Debug\Excel.Dna.Diagnostics-AddIn.xll"
+ * 
+ * C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE
+ * 
+ xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
+xcopy "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna*" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna*" /C /Y
+xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna64.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.xll*" /C /Y
+"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
+"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna" /Y
+         
+ * 
+ * https://groups.google.com/forum/#!topic/exceldna/IhqXaK-avWg
+ * 
+ * xcopy "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
+    "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
+
+ * 
+ * https://msdn.microsoft.com/en-us/library/aa730920%28v=office.12%29.aspx
+ * 
+ * 
+ * Custom Tabs?
+ * https://xldennis.wordpress.com/2009/03/11/sharing-custom-tabs-in-the-ribbon-ui/
+ */

@@ -1,0 +1,14 @@
+﻿<DnaLibrary Name="Excel.Dna.Diagnostics Add-In" RuntimeVersion="v4.0">
+  <ExternalLibrary Path="Excel.Dna.Diagnostics.dll" Pack="true" />
+  <mso:customUI xmlns:x1="TFCOfficeShim.Connect.5" xmlns:mso="http://schemas.microsoft.com/office/2009/07/customui">
+    <mso:ribbon>
+      <mso:tabs>
+        <mso:tab id="mso_c1.2C6154" label="New Tab" insertAfterQ="x1:IDC_TEAM_TAB">
+          <mso:group id="mso_c2.2C6154" label="New Group" autoScale="true">
+            <mso:control idQ="mso:TableInsertExcel" visible="true"/>
+          </mso:group>
+        </mso:tab>
+      </mso:tabs>
+    </mso:ribbon>
+  </mso:customUI>
+</DnaLibrary>
