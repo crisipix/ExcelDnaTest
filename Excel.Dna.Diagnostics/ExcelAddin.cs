@@ -22,9 +22,10 @@ namespace Excel.Dna.Diagnostics
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ExcelAddin() {
-            //var config = Path.Combine(GetConfigurationPath(), "Excel.Dna.Diagnostics-AddIn.xll.config");
-            var config = string.Format("{0}{1}",GetConfigurationPath(), ".config");
-            log4net.Config.XmlConfigurator.Configure(new FileInfo(config));
+
+            //var config = string.Format("{0}{1}",GetConfigurationPath(), ".config");
+            //log4net.Config.XmlConfigurator.Configure(new FileInfo(config));
+            log4net.Config.XmlConfigurator.Configure();
             log.Error("This is Ctor");
 
             Console.WriteLine("Hello");

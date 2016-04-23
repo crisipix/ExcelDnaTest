@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="ExcelAddin.cs" />
     <Compile Include="ExcelAddinFluent.cs" />
+    <Compile Include="Log4netTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -72,8 +73,13 @@
     <Content Include="Excel2007ConfigUI.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Excel.Dna.Diagnostics-AddIn.xll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExcelDna.Integration\ExcelDna.Integration.csproj">
