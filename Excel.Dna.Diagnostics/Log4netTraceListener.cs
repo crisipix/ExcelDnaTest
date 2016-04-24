@@ -57,8 +57,18 @@ namespace Excel.Dna.Diagnostics
 
         private readonly log4net.ILog _log;
 
+        /// <summary>
+        /// The trace listener will log system diagnostics messages. 
+        /// This instance is picked up in the xll.config file and attached as a listener of the ExcelDna.Integration Source
+        /// <source name="ExcelDna.Integration" switchValue="Verbose"> since this log4net is associated with
+        /// the Excel.Dna.Diagnostics class it will also listen for anything that happens there as well. 
+        /// We will be able to intercept logging that is called inside the Excel.Integration source as well as the main Diagnostics class. 
+        /// 
+        /// 
+        /// </summary>
         public Log4netTraceListener()
         {
+            
             _log = log4net.LogManager.GetLogger("System.Diagnostics.Redirection");
         }
 
@@ -84,3 +94,5 @@ namespace Excel.Dna.Diagnostics
         }
     }
 }
+
+
