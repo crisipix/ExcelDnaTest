@@ -42,6 +42,7 @@ namespace Excel.Dna.Diagnostics
             Console.WriteLine("Hello");
             MakeGraph();
             FillColors();
+            FillRange();
         }
 
         /*
@@ -131,6 +132,39 @@ namespace Excel.Dna.Diagnostics
             {
                 currentRange.get_Characters(index + 1, 2).Font.Superscript = true;
             }           
+        }
+
+        //http://stackoverflow.com/questions/2692979/how-to-speed-up-dumping-a-datatable-into-an-excel-worksheet
+        private void FillRange()
+        {
+            Application app = (Application)ExcelDnaUtil.Application;
+            //var app = new Application();
+            app.Visible = true;
+            var workbook = app.ActiveWorkbook;
+
+            Sheets excelSheets = workbook.Worksheets;
+            string currentSheet = "Sheet1";
+            Worksheet worksheet1 = (Worksheet)excelSheets.get_Item(currentSheet);
+            Range range = worksheet1.get_Range("A10", Missing.Value);
+            range = range.get_Resize(5, 5);
+
+            
+                //Create an array.
+                double[,] saRet = new double[5, 5];
+                
+                //Fill the array.
+                for (long iRow = 0; iRow < 5; iRow++)
+                {
+                    for (long iCol = 0; iCol < 5; iCol++)
+                    {
+                        //Put a counter in the cell.
+                        saRet[iRow, iCol] = iRow * iCol;
+                    }
+                }
+
+                //Set the range value to the array.
+                range.set_Value(Missing.Value, saRet);
+            
         }
 
         public void AutoClose()
