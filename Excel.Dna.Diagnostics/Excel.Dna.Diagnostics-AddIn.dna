@@ -8,10 +8,10 @@
         <tabs>
           <tab id='CustomTab' label='My Tab'>
             <group id='SampleGroup' label='My Sample 2010 Group'>
-              <button id='Button1' label='My Button 2010 Label' image='M' size='large' onAction='RunTagMacro' tag='ShowHelloMessage'
+              <button id='Button1' label='My Button 2010 Label' image='M' size='large' onAction='RunTest' tag='ShowHelloMessage'
   screentip="This is the screentip of button1" supertip="This is the supertip of button1"
  />
-              <button id='Button2' label='My Second 2010 Button' image='M' size='normal' onAction='OnButtonPressed'/>
+              <button id='Button2' label='My Second 2010 Button' image='M' size='normal' onAction='RunTest'/>
               <checkBox
             id="Checkbox1"
             label="Test CheckBox"
