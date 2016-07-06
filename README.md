@@ -20,6 +20,9 @@ You can override the default with a DumpFolder value (REG_EXPAND_SZ)
 You can also limit the number of dumps saved with a DumpCount value (DWORD)
 
 An XLL is a DLL that exports several procedures that are called by Excel or the Excel Add-in Manager. These procedures are described briefly here and discussed in detail in Add-in Manager and XLL Interface Functions. All of these DLL callbacks start with the prefix xlAuto. Only one of these, the command xlAutoOpen, is required. It is called when the add-in is activated, and it is typically used to register XLL functions and commands with Excel and to do other initialization tasks. The function signatures and example implementations of all of the xlAuto functions are provided in later sections.
+
+http://www.sevenforums.com/tutorials/122666-permissions-allow-deny-users-groups.html
+setting up permissions
 Even though xlAutoOpen is the only required one of these callbacks, your add-in may also need to export others depending on its behavior.
 Excel 2007 introduced a new data type, XLOPER12, to accommodate larger grids and to support long Unicode strings. XLOPER12 is described later in this topic. Whereas xlAuto functions take or return the old data type XLOPER, new versions of these functions were introduced in Excel 2007 that use XLOPER12 data types. With the exception of xlAutoFree12, which you must sometimes implement to avoid XLOPER12 memory leaks, you can safely omit all the version 12 xlAuto functions, in which case, starting in Excel 2007, Excel calls the XLOPER versions.
 xlAutoOpen
