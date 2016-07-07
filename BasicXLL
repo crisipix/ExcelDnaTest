@@ -1,0 +1,43 @@
+Reload the TestUDF64.xll, either from File->Open or in Tools->Add-Ins.
+
+Check with the formula =JoinThem("abc", 123)
+ <DnaLibrary Language="CS" RuntimeVersion="v4.0">
+    <![CDATA[
+
+        using ExcelDna.Integration;
+	
+                public class MyFunctions
+                {
+                        [ExcelFunction(Description="Joins a string to a number", Category="My functions")]
+                        public static string JoinThem(string str, double val)
+                        {
+                                return str + val;
+                        }
+                }
+    ]]>
+    </DnaLibrary> 
+    
+    
+    
+    
+    Load TestMacro64.xll in Excel (either File->Open or Tools->Add-Ins OR Browse...).
+You should be prompted whether to Enable Macros, click Enable.
+Enter =AddThem(4,2) into a cell - you should get 6. 
+
+(Under some localized versions of Excel the parameters are separated by a ';', so you'd say =AddThem(4; 2) instead).
+There should also be an entry for AddThem in the function wizard, under the category Test1.
+
+<DnaLibrary RuntimeVersion="v4.0">
+    <![CDATA[
+
+        Public Module MyFunctions
+
+
+            Function AddThem(x, y)
+                AddThem = x + y
+            End Function
+
+
+        End Module
+    ]]>
+</DnaLibrary>
