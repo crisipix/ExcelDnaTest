@@ -33,3 +33,11 @@ xlAutoClose
 Excel calls the xlAutoClose function whenever the XLL is deactivated. The add-in will be deactivated when an Excel session ends normally. If the user deactivates the add-in during an Excel session, the function is called.
 You should use xlAutoClose to unregister functions and commands, release resources, undo customizations, and so on.
 https://msdn.microsoft.com/en-us/library/office/bb687861.aspx
+
+
+Add xll sultion based off of the MSFT Excel 2013 SDK
+http://www.amolpandey.com/2012/08/12/xlls-lets-makeem-cpp/
+https://blogs.msdn.microsoft.com/andreww/2007/12/09/building-an-excel-xll-in-cc-with-vs-2008/
+https://msdn.microsoft.com/en-us/library/office/bb687883.aspx
+
+make x64 and 32
