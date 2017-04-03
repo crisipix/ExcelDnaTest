@@ -1,19 +1,15 @@
-﻿using System;
+﻿using ExcelDna.Integration;
+using ExcelDna.Integration.CustomUI;
+using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using ExcelDna.Integration;
-using ExcelDna.Integration.CustomUI;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Reflection;
-using AddinX.Ribbon.ExcelDna;
-using AddinX.Ribbon.Contract;
-using AddinX.Ribbon.Contract.Command;
-using Microsoft.Office.Interop.Excel;
 
-namespace Excel.Dna.Diagnostics
+namespace Excel.Dna.Diagnostics.Child1
 {
     [ComVisible(true)]
     public class ExcelAddin : ExcelRibbon, IExcelAddIn
@@ -21,7 +17,15 @@ namespace Excel.Dna.Diagnostics
         private IRibbonUI ribbon = null;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ExcelAddin() {
+
+        /*
+         https://groups.google.com/forum/#!searchin/exceldna/Application.RegisterXLL|sort:relevance/exceldna/arn26A_wE1I/mFn_csK-F4sJ
+         * https://groups.google.com/forum/#!searchin/exceldna/Application.RegisterXLL|sort:relevance/exceldna/95wADADBtpw/kJsPfFBpEgAJ
+         * https://groups.google.com/forum/#!searchin/exceldna/Exceldna.loader|sort:relevance/exceldna/8TcpX7v7FJw/z_YkgWd0AgAJ
+         * https://github.com/Excel-DNA/Samples/tree/master/MasterSlave/Master
+         */
+        public ExcelAddin()
+        {
 
             //var config = string.Format("{0}{1}",GetConfigurationPath(), ".config");
             //log4net.Config.XmlConfigurator.Configure(new FileInfo(config));
@@ -30,8 +34,6 @@ namespace Excel.Dna.Diagnostics
 
             Console.WriteLine("Hello");
 
-
-        
         }
 
         public void OnLoad(IRibbonUI ribbon)
@@ -47,6 +49,21 @@ namespace Excel.Dna.Diagnostics
             FillRange();
         }
 
+        public void SimplePrint(IRibbonControl control) {
+            Application app = (Application)ExcelDnaUtil.Application;
+            //var app = new Application();
+            app.Visible = true;
+            var workbook = app.ActiveWorkbook;
+
+            Sheets excelSheets = workbook.Worksheets;
+            string currentSheet = "Sheet1";
+            Worksheet worksheet1 = (Worksheet)excelSheets.get_Item(currentSheet);
+
+
+            worksheet1.Cells[1, 1] = "Test";
+            worksheet1.Cells[1, 2] = "Test 1";
+        }
+
         /*
          http://stackoverflow.com/questions/11223641/how-do-i-create-a-new-worksheet-and-populate-it-with-rows-of-data-using-excel-dn
          */
@@ -55,7 +72,8 @@ namespace Excel.Dna.Diagnostics
             Application app = (Application)ExcelDnaUtil.Application;
             //var app = new Application();
             app.Visible = true;
-            var workbook = app.Workbooks.Add(1);
+            var workbook = app.ActiveWorkbook;
+
 
             Sheets excelSheets = workbook.Worksheets;
             string currentSheet = "Sheet1";
@@ -133,7 +151,7 @@ namespace Excel.Dna.Diagnostics
             if (index > 0)
             {
                 currentRange.get_Characters(index + 1, 2).Font.Superscript = true;
-            }           
+            }
         }
 
         //http://stackoverflow.com/questions/2692979/how-to-speed-up-dumping-a-datatable-into-an-excel-worksheet
@@ -150,115 +168,66 @@ namespace Excel.Dna.Diagnostics
             Range range = worksheet1.get_Range("A10", Missing.Value);
             range = range.get_Resize(5, 5);
 
-            
-                //Create an array.
-                double[,] saRet = new double[5, 5];
-                
-                //Fill the array.
-                for (long iRow = 0; iRow < 5; iRow++)
-                {
-                    for (long iCol = 0; iCol < 5; iCol++)
-                    {
-                        //Put a counter in the cell.
-                        saRet[iRow, iCol] = iRow * iCol;
-                    }
-                }
 
-                //Set the range value to the array.
-                range.set_Value(Missing.Value, saRet);
-            
+            //Create an array.
+            double[,] saRet = new double[5, 5];
+
+            //Fill the array.
+            for (long iRow = 0; iRow < 5; iRow++)
+            {
+                for (long iCol = 0; iCol < 5; iCol++)
+                {
+                    //Put a counter in the cell.
+                    saRet[iRow, iCol] = iRow * iCol;
+                }
+            }
+
+            //Set the range value to the array.
+            range.set_Value(Missing.Value, saRet);
+
         }
 
         public void AutoClose()
         {
-             
+
         }
 
         public void AutoOpen()
         {
             // The Excel Application object
             AddinContext.ExcelApp = new Application(null, ExcelDnaUtil.Application);
-           
-
             log.Error("This is Auto Open");
             Console.WriteLine("Hello");
-
-            //RegisterChildren();
         }
 
-        /// <summary>
-        /// Kinda sucks that the moment because I need to copy the Excel.Dna.Diagnostics.Child1 dll to the Excel.Dna.Diagnotstics bin folder. 
-        /// because im loading the XLL and not the XLL packed. the DLLs need to get wrapped up together. 
-        /// otherwise the copying process is annoying. or i create a post build script to do it. 
-        /// Summary:
-        //     Loads an XLL code resource and automatically registers the functions and
-        //     commands contained in the resource.
-        //   Application.RegisterXLL();
-        /// </summary>
-        public static void RegisterChildren()
-        {
 
-            var childPath = @"C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics.Child1\bin\Debug\Excel.Dna.Diagnostics.Child1-AddIn.xll";
-            ExcelIntegration.RegisterXLL(childPath);
-
-        }
-
-        public static void UnregisterChildren()
-        {
-            var childPath = @"C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics.Child1\bin\Debug\Excel.Dna.Diagnostics.Child1-AddIn.xll";
-
-            ExcelIntegration.UnregisterXLL(childPath);
-        }
+     
 
         private string GetConfigurationPath()
         {
-            
+
             string codeBase = Assembly.GetExecutingAssembly().CodeBase;
             UriBuilder uri = new UriBuilder(codeBase);
             return Uri.UnescapeDataString(uri.Path);
             //string path = Uri.UnescapeDataString(uri.Path);
             //return Path.GetDirectoryName(path);
-        
+
         }
 
         /// <summary>
         /// Test Function
-        /// Go to excel type in =CoolFunction("Name")
+        /// Go to excel type in =ChildCoolFunction("Name")
         /// </summary>
-        [ExcelFunction(Description = "Cool Name Function")]
-        public static string CoolFunction(string name)
+        [ExcelFunction(Description = "Child Cool Name Function")]
+        public static string ChildCoolFunction(string name)
         {
-            return string.Format("Hello {0} You are Cool", name);
+            return string.Format("Child Says : Hello {0} You are Cool", name);
         }
-    
+
+    }
+
+    public static class AddinContext
+    {
+        public static Application ExcelApp { get; set; }
     }
 }
-
-
-
-/*
- * https://groups.google.com/forum/#!searchin/exceldna/Get$20Ribbon$20to$20show/exceldna/FzkZz9giA4M/mTNkqLSPP1MJ
- * 
- * "C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics\bin\Debug\Excel.Dna.Diagnostics-AddIn.xll"
- * 
- * C:\Program Files (x86)\Microsoft Office\root\Office16\EXCEL.EXE
- * 
- xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
-xcopy "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna*" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna*" /C /Y
-xcopy "$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna64.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.xll*" /C /Y
-"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
-"$(SolutionDir)\packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn64.dna" /Y
-         
- * 
- * https://groups.google.com/forum/#!topic/exceldna/IhqXaK-avWg
- * 
- * xcopy "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.xll*" /C /Y
-    "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics-AddIn.dna" /Y
-
- * 
- * https://msdn.microsoft.com/en-us/library/aa730920%28v=office.12%29.aspx
- * 
- * 
- * Custom Tabs?
- * https://xldennis.wordpress.com/2009/03/11/sharing-custom-tabs-in-the-ribbon-ui/
- */

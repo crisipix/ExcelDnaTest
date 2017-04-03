@@ -68,9 +68,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Excel2010CustomUI.xml" />
-    <Content Include="Excel2016CustomConfigs.xml" />
-    <Content Include="Excel2007ConfigUI.xml" />
+    <Content Include="SampleConfigs\Excel2010CustomUI.xml" />
+    <Content Include="SampleConfigs\Excel2016CustomConfigs.xml" />
+    <Content Include="SampleConfigs\Excel2007ConfigUI.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Excel.Dna.Diagnostics-AddIn.xll.config">

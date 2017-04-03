@@ -18,6 +18,10 @@
             getPressed="Checkbox1_getPressed"
             onAction="Checkbox1_onAction"/>
             </group >
+            <group id='RegisterGroup' label='Registry'>
+              <button id = 'RegisterChildren' label = 'Register Children' onAction = 'RunTagMacro' tag = 'RegisterChildren' />
+              <button id = 'UnregisterChildren' label = 'Unregister Children' onAction = 'RunTagMacro' tag = 'UnregisterChildren' />
+            </group>
           </tab>
         </tabs>
       </ribbon>
