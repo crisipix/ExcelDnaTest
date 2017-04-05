@@ -56,6 +56,7 @@
   <ItemGroup>
     <Content Include="Excel.Dna.Diagnostics.Child1-AddIn.dna">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Excel.Dna.Diagnostics.Child1-AddIn.xll.config" />
     <None Include="packages.config" />
@@ -65,7 +66,8 @@
     <PostBuildEvent>xcopy "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna.xll" "$(TargetDir)Excel.Dna.Diagnostics.Child1-AddIn.xll*" /C /Y
 xcopy "$(TargetDir)Excel.Dna.Diagnostics.Child1-AddIn.dna*" "$(TargetDir)Excel.Dna.Diagnostics.Child1-AddIn64.dna*" /C /Y
 xcopy "$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDna64.xll" "$(TargetDir)Excel.Dna.Diagnostics.Child1-AddIn64.xll*" /C /Y
-</PostBuildEvent>
+"$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics.Child1-AddIn.dna" /Y
+"$(SolutionDir)packages\ExcelDna.AddIn.0.33.9\tools\ExcelDnaPack.exe" "$(TargetDir)Excel.Dna.Diagnostics.Child1-AddIn64.dna" /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

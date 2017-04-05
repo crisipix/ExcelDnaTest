@@ -98,7 +98,6 @@ namespace Excel.Dna.Diagnostics
             chartPage.SetSourceData(chartRange, System.Reflection.Missing.Value);
             chartPage.ChartType = XlChartType.xlLine;
 
-
         }
 
         private void FillColors()
@@ -133,7 +132,9 @@ namespace Excel.Dna.Diagnostics
             if (index > 0)
             {
                 currentRange.get_Characters(index + 1, 2).Font.Superscript = true;
-            }           
+            }
+
+
         }
 
         //http://stackoverflow.com/questions/2692979/how-to-speed-up-dumping-a-datatable-into-an-excel-worksheet
@@ -198,14 +199,14 @@ namespace Excel.Dna.Diagnostics
         public static void RegisterChildren()
         {
 
-            var childPath = @"C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics.Child1\bin\Debug\Excel.Dna.Diagnostics.Child1-AddIn.xll";
+            var childPath = @"C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics.Child1\bin\Debug\Excel.Dna.Diagnostics.Child1-AddIn-packed.xll";
             ExcelIntegration.RegisterXLL(childPath);
 
         }
 
         public static void UnregisterChildren()
         {
-            var childPath = @"C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics.Child1\bin\Debug\Excel.Dna.Diagnostics.Child1-AddIn.xll";
+            var childPath = @"C:\Users\Chris W\Documents\GitHub\ExcelDnaTest\Excel.Dna.Diagnostics.Child1\bin\Debug\Excel.Dna.Diagnostics.Child1-AddIn-packed.xll";
 
             ExcelIntegration.UnregisterXLL(childPath);
         }

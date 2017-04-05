@@ -224,6 +224,16 @@ namespace Excel.Dna.Diagnostics.Child1
             return string.Format("Child Says : Hello {0} You are Cool", name);
         }
 
+        /// <summary>
+        /// Test Function
+        /// Go to excel type in =ChildCoolFunction("Name")
+        /// </summary>
+        [ExcelFunction(Description = "Child Annoying Name Function")]
+        public static string ChildAnnoyingFunction(string name)
+        {
+            return string.Format("Child Says : Hello {0} You are annoying", name);
+        }
+
     }
 
     public static class AddinContext
