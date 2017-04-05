@@ -12,6 +12,7 @@ using AddinX.Ribbon.ExcelDna;
 using AddinX.Ribbon.Contract;
 using AddinX.Ribbon.Contract.Command;
 using Microsoft.Office.Interop.Excel;
+using System.Threading;
 
 namespace Excel.Dna.Diagnostics
 {
@@ -20,6 +21,7 @@ namespace Excel.Dna.Diagnostics
     {
         private IRibbonUI ribbon = null;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static Workbook activeWorkbook;
 
         public ExcelAddin() {
 
@@ -179,7 +181,19 @@ namespace Excel.Dna.Diagnostics
         {
             // The Excel Application object
             AddinContext.ExcelApp = new Application(null, ExcelDnaUtil.Application);
-           
+            Application app = (Application)ExcelDnaUtil.Application;
+
+            if (app.ActiveWorkbook == null)
+            {
+                activeWorkbook = app.Workbooks.Add(1);
+            }
+            else
+            {
+                activeWorkbook = app.ActiveWorkbook;
+            }
+            //activeWorkbook.BeforeSave += new WorkbookEvents_BeforeSaveEventHandler(BeforSave);
+            activeWorkbook.BeforeClose += new WorkbookEvents_BeforeCloseEventHandler(BeforeClose);
+            activeWorkbook.AfterSave += new WorkbookEvents_AfterSaveEventHandler(AfterSave);
 
             log.Error("This is Auto Open");
             Console.WriteLine("Hello");
@@ -221,6 +235,42 @@ namespace Excel.Dna.Diagnostics
             //return Path.GetDirectoryName(path);
         
         }
+
+
+       // wb.BeforeSave += new WorkbookEvents_BeforeSaveEventHandler(wb_BeforeSave);
+        static void BeforSave(bool SaveAsUI, ref bool Cancel)
+        {
+
+            Sheets excelSheets = activeWorkbook.Worksheets;
+            Thread.Sleep(3000);
+
+            string currentSheet = "Sheet1";
+            Worksheet worksheet1 = (Worksheet)excelSheets.get_Item(currentSheet);
+            worksheet1.Cells[1, 1] = "Saving On Save";
+        }
+
+        static void BeforeClose( ref bool Cancel)
+        {
+
+            Sheets excelSheets = activeWorkbook.Worksheets;
+            Thread.Sleep(3000);
+            string currentSheet = "Sheet1";
+            Worksheet worksheet1 = (Worksheet)excelSheets.get_Item(currentSheet);
+            worksheet1.Cells[1, 2] = "Saving On Close";
+        }
+
+        //delegate void WorkbookEvents_AfterSaveEventHandler(bool Success);
+        static void AfterSave(bool Success)
+        {
+
+            Sheets excelSheets = activeWorkbook.Worksheets;
+            Thread.Sleep(3000);
+
+            string currentSheet = "Sheet1";
+            Worksheet worksheet1 = (Worksheet)excelSheets.get_Item(currentSheet);
+            worksheet1.Cells[1, 1] = "Saving After Save";
+        }
+
 
         /// <summary>
         /// Test Function
